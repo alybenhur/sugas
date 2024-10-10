@@ -1,13 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ProgramaService } from './programa.service';
 import { CreateProgramaDto } from './dto/create-programa.dto';
 import { UpdateProgramaDto } from './dto/update-programa.dto';
+import { RolesGuard } from 'src/roles/role-guard/role-guard.guard';
+import { Roles } from 'src/roles/decorator/role.decorator';
 
 @Controller('programa')
+@UseGuards(RolesGuard)
 export class ProgramaController {
   constructor(private readonly programaService: ProgramaService) {}
 
   @Post('CrearPrograma')
+  @Roles('admin')
   create(@Body() createProgramaDto: CreateProgramaDto) {
     return this.programaService.create(createProgramaDto);
   }

@@ -9,6 +9,10 @@ import { Competencia } from './competencia/entities/competencia.entity';
 import { ResultadosModule } from './resultados/resultados.module';
 import { Resultado } from './resultados/entities/resultado.entity';
 import { ProgramacompetenciaModule } from './programacompetencia/programacompetencia.module';
+import { RolesModule } from './roles/roles.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { AuthModule } from './auth/auth.module';
+import { RoleSeedModule } from './roles/rol-seed.module';
 
 @Module({
   imports: [
@@ -17,15 +21,20 @@ import { ProgramacompetenciaModule } from './programacompetencia/programacompete
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: '12345678',
       database: 'gguias',
-      entities: [Programa, Competencia, Resultado],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ProgramaModule,
     CompetenciaModule,
     ResultadosModule,
-    ProgramacompetenciaModule],
+    ProgramacompetenciaModule,
+    RolesModule,
+    UsuariosModule,
+    AuthModule,
+    RoleSeedModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

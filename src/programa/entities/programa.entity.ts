@@ -1,5 +1,6 @@
 import { Competencia } from "src/competencia/entities/competencia.entity";
 import { Resultado } from "src/resultados/entities/resultado.entity";
+import { Usuario } from "src/usuarios/entities/usuario.entity";
 import { Column, Entity, Index, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -23,4 +24,8 @@ export class Programa {
     @ManyToMany(() => Competencia, competencia => competencia.programas)
     @JoinTable()
     competencias: Competencia[];
+
+    @ManyToMany(() => Usuario, user => user.programa)
+    @JoinTable()
+    usuario:Usuario
 }

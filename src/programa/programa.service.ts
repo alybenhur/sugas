@@ -1,9 +1,11 @@
+/* eslint-disable prettier/prettier */
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProgramaDto } from './dto/create-programa.dto';
 import { UpdateProgramaDto } from './dto/update-programa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Programa } from './entities/programa.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
+import { Competencia } from 'src/competencia/entities/competencia.entity';
 
 @Injectable()
 export class ProgramaService {
@@ -15,9 +17,9 @@ export class ProgramaService {
   
   async create(createProgramaDto: CreateProgramaDto): Promise<Programa> {
     
-    const pro = this.programaRepository.create(createProgramaDto);
+    const programa = this.programaRepository.create(createProgramaDto);
     try{
-    return this.programaRepository.save(pro);
+    return this.programaRepository.save(programa);
     }
     catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
@@ -26,15 +28,36 @@ export class ProgramaService {
     }
   }
 
-  findAll(): Promise<Programa[]> {
-    return this.programaRepository.find({ relations: ['competencias'] });
+ async findAll(): Promise<Programa[]> {
+    return await this.programaRepository.find({ relations: ['competencias'] });
+  }
+  async findProgramasByIds( programasIds: number[]): Promise<Programa[]> {
+    return await this.programaRepository.find({
+      where: {
+        id: In(programasIds),
+      },
+    
+    });
   }
 
-  //{ relations: ['competencias'] }
-  findOne(id: number): Promise<Programa> {
-    return this.programaRepository.findOne({ where: { id },  relations: ['competencias'] });
+  async findOne(id: number): Promise<Programa> {
+    return await this.programaRepository.findOne({ where: { id }, relations: ['competencias'] });
   }
- //
+ 
+  async getCompetenciasPorPrograma(programaId: number): Promise<Competencia[]> {
+    
+    const programa = await this.programaRepository.findOne({
+      where: { id: programaId },
+      relations: ['competencias'], // Asegúrate de tener la relación configurada correctamente
+    });
+
+    return programa ? programa.competencias : [];
+  }
+
+  findOneById(id: number): Promise<Programa> {
+    return this.programaRepository.findOne({ where: { id }, relations: ['competencias'] });
+  }
+ 
 
   async update(id: number, updateProgramaDto: UpdateProgramaDto): Promise<Programa> {
     console.log(id)
