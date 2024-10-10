@@ -17,6 +17,7 @@ export class ProgramaController {
   }
 
   @Get()
+  @Roles('admin')
   findAll() {
     return this.programaService.findAll();
   }
@@ -27,11 +28,13 @@ export class ProgramaController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateProgramaDto: UpdateProgramaDto) {
     return this.programaService.update(+id, updateProgramaDto);
   }
 
   @Delete('codigo/:id')
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return this.programaService.remove(id);
   }

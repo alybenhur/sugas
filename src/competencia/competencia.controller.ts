@@ -17,6 +17,7 @@ export class CompetenciaController {
   }
 
   @Get()
+  @Roles('admin')
   findAll() {
     return this.competenciaService.findAll();
   }
@@ -27,6 +28,7 @@ export class CompetenciaController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateCompetenciaDto: UpdateCompetenciaDto) {
     return this.competenciaService.update(+id, updateCompetenciaDto);
   }

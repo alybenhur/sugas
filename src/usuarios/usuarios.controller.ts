@@ -8,7 +8,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UsuariosService } from './usuarios.service';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 
-@Controller('user')
+@Controller('usuarios')
 @UseGuards(RolesGuard)
 export class UsuariosController {
   constructor(private readonly userService: UsuariosService) {}

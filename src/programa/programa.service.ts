@@ -55,7 +55,7 @@ export class ProgramaService {
   }
 
   findOneById(id: number): Promise<Programa> {
-    return this.programaRepository.findOne({ where: { id }, relations: ['competencias'] });
+    return this.programaRepository.findOne({ where: { id:id }, relations: ['competencias'] });
   }
  
 

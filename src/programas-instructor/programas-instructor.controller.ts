@@ -28,11 +28,13 @@ export class ProgramasInstructorController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateProgramasInstructorDto: UpdateProgramasInstructorDto) {
     return this.programasInstructorService.update(+id, updateProgramasInstructorDto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return this.programasInstructorService.remove(+id);
   }

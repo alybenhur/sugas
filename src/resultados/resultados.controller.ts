@@ -30,17 +30,20 @@ export class ResultadosController {
   }
 
   @Get(':idprograma/:idcompetencia')
+  @Roles('admin')
   findcomppro(@Param('idcompetencia') idcomp: number,
   @Param('idprograma') idprog: number,) {
     return this.resultadosService.findresultadoprocomp(idprog,idcomp);
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateResultadoDto: UpdateResultadoDto) {
     return this.resultadosService.update(+id, updateResultadoDto);
   }
 
   @Delete('codigo/:id')
+  @Roles('admin')
   remove(@Param('id') id: number) {
     return this.resultadosService.remove(id);
   }

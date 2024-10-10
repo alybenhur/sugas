@@ -12,7 +12,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  @UseGuards(AuthGuard,RolesGuard)
+  @UseGuards(RolesGuard)
   @Roles('admin')
   Register(@Body() registerAuthDto: RegisterAuthDto) {
     return this.authService.register(registerAuthDto);

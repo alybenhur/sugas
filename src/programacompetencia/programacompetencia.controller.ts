@@ -27,6 +27,7 @@ export class ProgramacompetenciaController {
   }
 
   @Patch(':id')
+  @Roles('admin')
   update(@Param('id') id: string, @Body() updateProgramacompetenciaDto: UpdateProgramacompetenciaDto) {
     return this.programacompetenciaService.update(+id, updateProgramacompetenciaDto);
   }
@@ -34,6 +35,7 @@ export class ProgramacompetenciaController {
   
 
   @Delete(':programId/competencia/:competenciaId')
+  @Roles('admin')
    removeRole(@Param('programId') programId: number, @Param('competenciaId') competenciaId: number) {
     return  this.programacompetenciaService.remove(programId,competenciaId);
     
