@@ -3,7 +3,7 @@ import { CreateCompetenciaDto } from './dto/create-competencia.dto';
 import { UpdateCompetenciaDto } from './dto/update-competencia.dto';
 import { Competencia } from './entities/competencia.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class CompetenciaService {
@@ -18,6 +18,15 @@ export class CompetenciaService {
  
   findAll(): Promise<Competencia[]> {
     return this.competenciaRepository.find({ relations: ['programas'] });
+  }
+  async findByIds(competenciasId: number[]): Promise<Competencia[]> {
+    // Buscar las competencias por sus IDs
+    return await this.competenciaRepository.find({
+      where: {
+        id: In(competenciasId)
+      },
+    
+    });
   }
 
   findOne(codigo : string): Promise<Competencia> {

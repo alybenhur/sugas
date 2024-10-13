@@ -12,17 +12,16 @@ export class Competencia {
     codigo: string;
   
     @Column({ length: 200 })
-    
     nombre: string;
 
     @Column()
     duracion: number;
 
     
-    @ManyToMany(() => Programa, programa => programa.competencias,{ nullable: false })
+    @ManyToMany(() => Programa, (programa) => programa.competencias)
     programas: Programa[];
   
-    @OneToMany(() => Resultado, (resultado) => resultado.competencia,{ nullable: false })
+    @OneToMany(() => Resultado, (resultado) => resultado.competencia)
     resultado: Resultado[]
     
 }
